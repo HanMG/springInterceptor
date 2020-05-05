@@ -7,9 +7,7 @@
 	<title>로그인</title>	
 </head>
 <body>
-	<script type="text/javascript">
-		/* alert("아이디 혹은 비밀번호를 확인해주세요!!");
-		self.location = "/user/login"; */
+	<script type="text/javascript">		
 		self.location = "/sboard/list";
 	</script>
 </body>
