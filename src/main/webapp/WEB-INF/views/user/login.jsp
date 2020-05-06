@@ -25,7 +25,7 @@
 									<div class="col-xs-8">
 										<div class="checkbox icheck">
 											<label>
-												<input type="checkbox" name="userCookie"> 기억하기
+												<input type="checkbox" name="useCookie"> 기억하기
 											</label>
 										</div>
 									</div>

@@ -1,5 +1,6 @@
 package com.moon.interceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if(userVO != null) {
 			logger.info("new login success");
 			session.setAttribute(LOGIN, userVO);
+			
+			if(request.getParameter("useCookie") != null) {
+				logger.info("remember me.......");
+				Cookie loginCookie = new Cookie("loginCookie", session.getId());
+				loginCookie.setPath("/");
+				loginCookie.setMaxAge(60*60*24*7); // 초단위의 시간동안 유효, 60*60*24*7은 일주일보관
+				response.addCookie(loginCookie); // 만들어진 쿠키는 HttpServletResponse에 담겨 전송				
+			}
 			//response.sendRedirect("/");
 			Object dest = session.getAttribute("dest");
 			

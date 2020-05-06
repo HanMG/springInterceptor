@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
@@ -38,7 +37,7 @@
 							<div class="form-group">
 								<label for="exampleInputWriter">Writer</label> <input
 									type="text" class="form-control" name="writer"
-									placeholder="Enter Writer">
+									value='${login.uid}' readonly="readonly">
 							</div>
 							<div class="form-group">
 								<label>File DROP HERE</label>

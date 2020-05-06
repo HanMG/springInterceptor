@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -78,10 +77,11 @@
 						<div>
 							<hr>
 						</div>
-						<button type="button" class="btn btn-warning" id="modifyBtn">Modify</button>
-						<button type="button" class="btn btn-danger" id="removeBtn">Remove</button>
-						<button type="button" class="btn btn-primary" id="goListBtn">Go
-							List</button>
+						<c:if test="${login.uid == boardVO.writer}">
+							<button type="button" class="btn btn-warning" id="modifyBtn">Modify</button>
+							<button type="button" class="btn btn-danger" id="removeBtn">Remove</button>
+						</c:if>
+						<button type="button" class="btn btn-primary" id="goListBtn">Go List</button>
 					</div>
 
 				</div>
@@ -94,16 +94,23 @@
 				<div class="box-header">
 					<h3 class="box-title">ADD NEW REPLY</h3>
 				</div>
-				<div class="box-body">
-					<label for="exampleInputTitle1">Writer</label> <input type="text"
-						class="form-control" placeholder="USER ID" id="newReplyWriter">
-					<label for="exampleInputTitle1">Text</label> <input type="text"
-						class="form-control" placeholder="REPLY TEXT" id="newReplyText">
-				</div>
-				<div class="box-footer">
-					<button type="button" class="btn btn-primary" id="replyAddBtn">ADD
-						REPLY</button>
-				</div>
+				<c:if test="${not empty login}">
+					<div class="box-body">
+						<label for="exampleInputTitle1">Writer</label> <input type="text"
+							class="form-control" placeholder="USER ID" id="newReplyWriter">
+						<label for="exampleInputTitle1">Text</label> <input type="text"
+							class="form-control" placeholder="REPLY TEXT" id="newReplyText">
+					</div>
+					<div class="box-footer">
+						<button type="button" class="btn btn-primary" id="replyAddBtn">ADD
+							REPLY</button>
+					</div>
+				</c:if>
+				<c:if test="${empty login}">
+					<div class="box-body">
+						<div><a href="javascript:goLogin();">Login Please</a></div>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -131,7 +138,7 @@
 						<input type="text" id="replytext" class="form-control">
 					</p>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer">				
 					<button type="button" class="btn btn-info" id="replyModBtn">Modify</button>
 					<button type="button" class="btn btn-danger" id="replyDelBtn">Delete</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -152,7 +159,9 @@
 		<h3 class="timeline-header"><strong>{{rno}}</strong> -{{replyer}}</h3>
 		<div class="timeline-body">{{replytext}}</div>
 			<div class="timeline-footer">
+				{{#eqReplyer replyer}}
 				<a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modifyModal">Modify</a>
+				{{/eqReplyer}}
 			</div>
 	</div>
 </li>
@@ -374,7 +383,22 @@
 	$("#popup_img").on("click", function() {
 		$(".popup").hide("slow");
 	});
+
+	// 로그인한 사용자의 값을 비교
+	Handlebars.registerHelper("eqReplyer",function(replyer, block){
+		var accum = '';
+		if(replyer == '${login.uid}'){
+			accum += block.fn();
+		}
+		return accum;
+	});
+
+	// 댓글 로그인 안되어있을시 누르면 이동.
+	function goLogin(){
+		self.location = "/user/login";
+	}
 </script>
+
 <!-- 게시판 버튼처리 -->
 <script>
 	$(document).ready(function() {
