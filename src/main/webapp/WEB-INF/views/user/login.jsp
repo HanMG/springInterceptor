@@ -18,7 +18,7 @@
 									<span class="glyphicon glyphicon-lock form-control-feedback"></span>									
 								</div>
 								<div class="form-group has-feedback">
-									<input type="text" name="upw" class="form-control" placeholder="비밀번호를 입력하세요.">
+									<input type="password" name="upw" class="form-control" placeholder="비밀번호를 입력하세요.">
 									<span class="glyphicon glyphicon-lock form-control-feedback"></span>									
 								</div>
 								<div class="row">
